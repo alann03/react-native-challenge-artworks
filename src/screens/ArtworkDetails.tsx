@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from "react-native";
-import type { Artwork } from "../typings/artwork";
+import type { ArtworkDetails } from "../typings/artwork";
 import { getArtworkDetails } from "../api/getArtworkDetails";
 import { RouteProp } from "@react-navigation/native";
 import { HomeStackParamList } from "../navigation/navigation";
@@ -14,7 +14,7 @@ interface ArtworkDetailsScreenProps {
 }
 
 const ArtworkDetailsScreen: React.FC<ArtworkDetailsScreenProps> = ({ route }) => {
-  const [artwork, setArtwork] = useState<Artwork>();
+  const [artwork, setArtwork] = useState<ArtworkDetails>();
   const [isLoading, setIsLoading] = useState(true);
 
   const { id } = route.params;
@@ -38,7 +38,9 @@ const ArtworkDetailsScreen: React.FC<ArtworkDetailsScreenProps> = ({ route }) =>
     );
   }
 
-  const hslColor = `hsl(${artwork?.color?.h}, ${artwork?.color?.s}%, ${artwork?.color?.l}%)`;
+  const hslColor = `hsl(${artwork?.color?.h ?? 255}, ${artwork?.color?.s ?? 255}%, ${
+    artwork?.color?.l ?? 255
+  }%)`;
 
   return (
     <LinearGradient style={styles.gradient} colors={[hslColor, "#000000"]} locations={[0.2, 1]}>

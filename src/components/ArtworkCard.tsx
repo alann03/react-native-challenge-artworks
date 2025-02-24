@@ -17,7 +17,7 @@ const ArtworkCard = ({ artworkData }: Props) => {
     navigate("Artwork", { id: id });
   };
 
-  const hslColor = `hsla(${color?.h}, ${color?.s}%, ${color?.l}%, 0.85)`;
+  const hslColor = `hsla(${color?.h ?? 0}, ${color?.s ?? 0}%, ${color?.l ?? 0}%, 0.85)`;
 
   return (
     <TouchableOpacity onPress={handleNavigate} activeOpacity={0.7} style={styles.card}>
