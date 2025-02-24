@@ -6,6 +6,7 @@ import { RouteProp } from "@react-navigation/native";
 import { HomeStackParamList } from "../navigation/navigation";
 import { LinearGradient } from "expo-linear-gradient";
 import WishlistButton from "../components/WishlistButton";
+import HTMLView from "react-native-htmlview";
 
 type ArtworkRouteProps = RouteProp<HomeStackParamList, "Artwork">;
 
@@ -65,9 +66,17 @@ const ArtworkDetailsScreen: React.FC<ArtworkDetailsScreenProps> = ({ route }) =>
               {artwork?.date_display ?? "Unknown"}
             </Text>
           </View>
-          <Text style={styles.description}>
-            {artwork?.description || "No description available."}
-          </Text>
+          {artwork?.description ? (
+            <HTMLView
+              value={artwork.description}
+              stylesheet={{
+                p: styles.description,
+                span: styles.description,
+              }}
+            />
+          ) : (
+            <Text style={styles.description}>No description available.</Text>
+          )}
         </View>
       </ScrollView>
     </LinearGradient>
