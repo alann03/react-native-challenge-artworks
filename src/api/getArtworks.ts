@@ -25,9 +25,12 @@ export const getArtworks = async ({
   limit = 15,
 }: Props): Promise<ArtworkData | undefined> => {
   try {
-    const response = await fetcher(`/artworks?page=${page}&limit=${limit}`, {
-      method: "GET",
-    });
+    const response = await fetcher(
+      `/artworks?page=${page}&limit=${limit}&fields=id,title,image_id,color`,
+      {
+        method: "GET",
+      },
+    );
 
     return {
       data: response?.data,
