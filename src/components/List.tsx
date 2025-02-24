@@ -38,7 +38,7 @@ const List = ({ data, isLoading, isPaginating, handleNextPage, emptyMessage }: P
       data={data}
       renderItem={renderItem}
       keyExtractor={(item) => String(item?.id)}
-      ListEmptyComponent={EmptyMessage}
+      ListEmptyComponent={!isLoading && EmptyMessage}
       ListFooterComponent={
         isPaginating ? <ActivityIndicator style={styles.listLoadingPage} size="small" /> : null
       }

@@ -43,4 +43,12 @@ const removeFromWishlist = async (artworkId: number) => {
   }
 };
 
-export { getWishlist, addToWishlist, removeFromWishlist };
+const clearWishlist = async () => {
+  try {
+    await AsyncStorage.removeItem(WISHLIST_KEY);
+  } catch (error) {
+    console.error("Error clearing wishlist:", error);
+  }
+};
+
+export { getWishlist, addToWishlist, removeFromWishlist, clearWishlist };

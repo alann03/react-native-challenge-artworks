@@ -3,6 +3,7 @@ import {
   getWishlist,
   addToWishlist as storageAddToWishlist,
   removeFromWishlist as storageRemoveFromWishlist,
+  clearWishlist as storageClearWishlist,
 } from "../storage/wishlistStorage";
 import { Artwork } from "../typings/artwork";
 
@@ -10,6 +11,7 @@ type WishlistContextType = {
   wishlist: Artwork[];
   addToWishlist: (artwork: Artwork) => Promise<void>;
   removeFromWishlist: (artworkId: number) => Promise<void>;
+  clearWishlist: () => Promise<void>;
   isInWishlist: (artworkId: number) => boolean;
 };
 
@@ -37,6 +39,11 @@ export const WishlistProvider = ({ children }: { children: React.ReactNode }) =>
     setWishlist(await getWishlist());
   }, []);
 
+  const handleClearWishlist = useCallback(async () => {
+    await storageClearWishlist();
+    setWishlist([]);
+  }, []);
+
   const isInWishlist = (artworkId: number) => wishlist.some((item) => item.id === artworkId);
 
   const value = useMemo(
@@ -44,9 +51,10 @@ export const WishlistProvider = ({ children }: { children: React.ReactNode }) =>
       wishlist,
       addToWishlist: handleAddToWishlist,
       removeFromWishlist: handleRemoveFromWishlist,
+      clearWishlist: handleClearWishlist,
       isInWishlist,
     }),
-    [wishlist, handleAddToWishlist, handleRemoveFromWishlist],
+    [wishlist, handleAddToWishlist, handleRemoveFromWishlist, handleClearWishlist],
   );
 
   return <WishlistContext.Provider value={value}>{children}</WishlistContext.Provider>;
