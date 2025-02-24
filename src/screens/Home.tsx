@@ -38,11 +38,14 @@ const HomeScreen = () => {
       }
 
       if (Array.isArray(response?.data)) {
-        if (pageNumber === 1) {
-          setArtworks(response.data);
-        } else {
-          setArtworks((prev) => [...prev, ...response.data]);
-        }
+        setArtworks((prev) => {
+          const newArtworks = pageNumber === 1 ? response.data : [...prev, ...response.data];
+
+          const uniqueArtworks = Array.from(new Map(newArtworks.map((a) => [a.id, a])).values());
+
+          return uniqueArtworks;
+        });
+
         setPagination(response?.pagination || null);
       }
     } catch (error) {
