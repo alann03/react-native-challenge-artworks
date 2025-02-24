@@ -1,12 +1,21 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Image, ScrollView, StyleSheet, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import type { ArtworkDetails } from "../typings/artwork";
 import { getArtworkDetails } from "../api/getArtworkDetails";
-import { RouteProp } from "@react-navigation/native";
+import { RouteProp, useNavigation } from "@react-navigation/native";
 import { HomeStackParamList } from "../navigation/navigation";
 import { LinearGradient } from "expo-linear-gradient";
 import WishlistButton from "../components/WishlistButton";
 import HTMLView from "react-native-htmlview";
+import { Ionicons } from "@expo/vector-icons";
 
 type ArtworkRouteProps = RouteProp<HomeStackParamList, "Artwork">;
 
@@ -18,6 +27,7 @@ const ArtworkDetailsScreen: React.FC<ArtworkDetailsScreenProps> = ({ route }) =>
   const [artwork, setArtwork] = useState<ArtworkDetails>();
   const [isLoading, setIsLoading] = useState(true);
 
+  const navigation = useNavigation();
   const { id } = route.params;
 
   useEffect(() => {
@@ -45,6 +55,13 @@ const ArtworkDetailsScreen: React.FC<ArtworkDetailsScreenProps> = ({ route }) =>
 
   return (
     <LinearGradient style={styles.gradient} colors={[hslColor, "#000000"]} locations={[0.2, 1]}>
+      <TouchableOpacity
+        activeOpacity={0.5}
+        onPress={() => navigation.goBack()}
+        style={styles.backButton}
+      >
+        <Ionicons name="chevron-back" size={26} color={"#000"} />
+      </TouchableOpacity>
       <ScrollView>
         <View style={styles.imageContainer}>
           <Image
@@ -156,6 +173,15 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: -8,
     right: -4,
+  },
+  backButton: {
+    position: "absolute",
+    borderRadius: 20,
+    padding: 5,
+    zIndex: 999,
+    top: 50,
+    left: 10,
+    backgroundColor: "rgba(255, 255, 255, 0.9)",
   },
 });
 
