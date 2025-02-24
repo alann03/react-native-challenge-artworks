@@ -67,6 +67,7 @@ export const RootTabs = () => {
         component={HomeStackNavigator}
         options={{
           headerShown: false,
+          title: "Home",
           tabBarIcon: ({ color, focused }) => (
             <Ionicons name="home" size={focused ? 26 : 24} color={color} />
           ),
