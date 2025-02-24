@@ -6,10 +6,7 @@ type HomeStackParamList = {
   Artwork: { id: number };
 };
 
-type RootTabParamList = {
-  Home: undefined;
+type WishlistStackParamList = {
   Wishlist: undefined;
+  Artwork: { id: number };
 };
-
-export type HomeScreenProps = NativeStackScreenProps<HomeStackParamList, "Home">;
-export type WishlistScreenProps = BottomTabScreenProps<RootTabParamList, "Wishlist">;
