@@ -10,5 +10,6 @@ export const getArtworkDetails = async (id: number): Promise<Artwork | undefined
     return response?.data;
   } catch (error) {
     console.error("Error fetching artwork details:", error);
+    throw error;
   }
 };

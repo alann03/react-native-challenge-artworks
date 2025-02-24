@@ -6,7 +6,7 @@ interface ArtworkData {
   data: Artwork[];
 }
 
-interface Pagination {
+export interface Pagination {
   total: number;
   limit: number;
   offset: number;
@@ -15,9 +15,17 @@ interface Pagination {
   next_url: string;
 }
 
-export const getArtworks = async (): Promise<ArtworkData | undefined> => {
+interface Props {
+  page: number;
+  limit?: number;
+}
+
+export const getArtworks = async ({
+  page = 1,
+  limit = 15,
+}: Props): Promise<ArtworkData | undefined> => {
   try {
-    const response = await fetcher("/artworks", {
+    const response = await fetcher(`/artworks?page=${page}&limit=${limit}`, {
       method: "GET",
     });
 
@@ -27,5 +35,6 @@ export const getArtworks = async (): Promise<ArtworkData | undefined> => {
     };
   } catch (error) {
     console.error("Error fetching artworks:", error);
+    throw error;
   }
 };
