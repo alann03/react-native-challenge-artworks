@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, StyleSheet, View } from "react-native";
+import { ActivityIndicator, FlatList, StyleSheet, Text, View } from "react-native";
 import { Artwork } from "../typings/artwork";
 import ArtworkCard from "./ArtworkCard";
 import { useCallback } from "react";
@@ -8,9 +8,10 @@ interface Props {
   isLoading: boolean;
   isPaginating: boolean;
   handleNextPage: () => void;
+  emptyMessage: string;
 }
 
-const List = ({ data, isLoading, isPaginating, handleNextPage }: Props) => {
+const List = ({ data, isLoading, isPaginating, handleNextPage, emptyMessage }: Props) => {
   const renderItem = useCallback(
     ({ item }: { item: Artwork }) => <ArtworkCard artworkData={item} key={item.id} />,
     [],
@@ -24,17 +25,26 @@ const List = ({ data, isLoading, isPaginating, handleNextPage }: Props) => {
     );
   }
 
+  const EmptyMessage = () => {
+    return (
+      <View style={styles.emptyMessageContainer}>
+        <Text style={styles.emptyMessage}>{emptyMessage}</Text>
+      </View>
+    );
+  };
+
   return (
     <FlatList
       data={data}
       renderItem={renderItem}
       keyExtractor={(item) => String(item?.id)}
+      ListEmptyComponent={EmptyMessage}
       ListFooterComponent={
         isPaginating ? <ActivityIndicator style={styles.listLoadingPage} size="small" /> : null
       }
       onEndReached={handleNextPage}
       onEndReachedThreshold={0.5}
-      contentContainerStyle={styles.container}
+      contentContainerStyle={[styles.container, { flex: data.length === 0 ? 1 : 0 }]}
     />
   );
 };
@@ -51,6 +61,16 @@ const styles = StyleSheet.create({
   },
   listLoadingPage: {
     marginVertical: 16,
+  },
+  emptyMessageContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  emptyMessage: {
+    fontSize: 16,
+    fontWeight: "500",
+    textAlign: "center",
   },
 });
 
