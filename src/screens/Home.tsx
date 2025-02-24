@@ -1,10 +1,11 @@
 import { Keyboard, StyleSheet, View } from "react-native";
 import { useEffect, useState } from "react";
 import { Artwork } from "../typings/artwork";
-import { getArtworks, Pagination } from "../api/getArtworks";
+import { getArtworks } from "../api/getArtworks";
 import List from "../components/List";
 import { searchArtworks } from "../api/searchArtworks";
 import Searchbar from "../components/Searchbar";
+import { Pagination } from "../api/types";
 
 const HomeScreen = () => {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
