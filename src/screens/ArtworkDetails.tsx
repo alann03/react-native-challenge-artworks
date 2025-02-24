@@ -5,6 +5,7 @@ import { getArtworkDetails } from "../api/getArtworkDetails";
 import { RouteProp } from "@react-navigation/native";
 import { HomeStackParamList } from "../navigation/navigation";
 import { LinearGradient } from "expo-linear-gradient";
+import WishlistButton from "../components/WishlistButton";
 
 type ArtworkRouteProps = RouteProp<HomeStackParamList, "Artwork">;
 
@@ -51,6 +52,7 @@ const ArtworkDetailsScreen: React.FC<ArtworkDetailsScreenProps> = ({ route }) =>
           />
         </View>
         <View style={styles.detailsContainer}>
+          {artwork && <WishlistButton artwork={artwork} style={styles.wishlistButton} />}
           <Text style={styles.title}>{artwork?.title}</Text>
           {artwork?.medium_display && <Text style={styles.medium}>{artwork?.medium_display}</Text>}
           <View style={styles.artistAndDate}>
@@ -138,6 +140,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#fff",
     opacity: 0.8,
+  },
+  wishlistButton: {
+    position: "absolute",
+    top: -8,
+    right: -4,
   },
 });
 

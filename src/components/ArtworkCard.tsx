@@ -1,24 +1,17 @@
 import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { HomeStackParamList } from "../navigation/navigation";
-
-interface Color {
-  h: number;
-  l: number;
-  s: number;
-  percentage: number;
-  population: number;
-}
+import WishlistButton from "./WishlistButton";
+import { Artwork } from "../typings/artwork";
 
 interface Props {
-  title: string;
-  imageId: string;
-  color: Color;
-  id: number;
+  artworkData: Artwork;
 }
 
-const ArtworkCard = ({ title, imageId, color, id }: Props) => {
+const ArtworkCard = ({ artworkData }: Props) => {
   const { navigate } = useNavigation<NavigationProp<HomeStackParamList>>();
+
+  const { title, image_id, color, id } = artworkData;
 
   const handleNavigate = () => {
     navigate("Artwork", { id: id });
@@ -28,9 +21,10 @@ const ArtworkCard = ({ title, imageId, color, id }: Props) => {
 
   return (
     <TouchableOpacity onPress={handleNavigate} activeOpacity={0.7} style={styles.card}>
+      <WishlistButton artwork={artworkData} style={styles.wishlistButton} />
       <View style={styles.cardContent}>
         <Image
-          source={{ uri: `https://www.artic.edu/iiif/2/${imageId}/full/843,/0/default.jpg` }}
+          source={{ uri: `https://www.artic.edu/iiif/2/${image_id}/full/843,/0/default.jpg` }}
           style={styles.image}
         />
         <View style={[styles.overlay, { backgroundColor: hslColor }]}>
@@ -45,6 +39,7 @@ const ArtworkCard = ({ title, imageId, color, id }: Props) => {
 
 const styles = StyleSheet.create({
   card: {
+    position: "relative",
     borderRadius: 12,
     backgroundColor: "#fff",
     shadowColor: "#000",
@@ -74,6 +69,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "bold",
     color: "#fff",
+  },
+  wishlistButton: {
+    position: "absolute",
+    top: -4,
+    right: -4,
   },
 });
 

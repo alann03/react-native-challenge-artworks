@@ -12,15 +12,7 @@ interface Props {
 
 const List = ({ data, isLoading, isPaginating, handleNextPage }: Props) => {
   const renderItem = useCallback(
-    ({ item }: { item: Artwork }) => (
-      <ArtworkCard
-        title={item.title}
-        imageId={item.image_id}
-        color={item.color}
-        id={item.id}
-        key={item.id}
-      />
-    ),
+    ({ item }: { item: Artwork }) => <ArtworkCard artworkData={item} key={item.id} />,
     [],
   );
 
